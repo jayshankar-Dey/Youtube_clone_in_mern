@@ -1,0 +1,17 @@
+const express = require('express')
+const UserController = require('../Controllers/User.Controller')
+const isAuth = require('../middlewares/isAuth')
+const { uploadImage } = require('../middlewares/multer')
+const Router = express.Router()
+
+Router.post('/register', UserController.register)
+Router.post('/verify/otp', UserController.Verify_OTP)
+Router.post('/login', UserController.Login)
+Router.get('/get_user/:id?', isAuth, UserController.getUser)
+Router.get('/get_online_user', isAuth, UserController.getOnlineUser)
+Router.put('/update', isAuth, UserController.UpdateDetailes)
+Router.put('/updatePic', isAuth, uploadImage.single("file"), UserController.UpdatePic)
+Router.get('/get/Notice', isAuth, UserController.get_User_Notification)
+Router.put('/seen/Notice', isAuth, UserController.Seen_User_Notification)
+Router.delete('/delete/Notice/:id', isAuth, UserController.Delete_User_Notification)
+module.exports = Router
